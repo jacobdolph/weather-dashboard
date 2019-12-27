@@ -20,8 +20,14 @@
         <div class="row">
             <div class="col-md-3 bg-light border rounded-lg" style="padding: 1.5rem;">
                 <h4>Search for a city: </h4>
-                <input type=" search" name="Search City" id="search-button">
-                <button type="submit">Search</button>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search City" aria-label="Search City"
+                        aria-describedby="button-addon2" id="search-term">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary search-button" type="button"
+                            id="button-addon2">Search</button>
+                    </div>
+                </div>
             </div>
             <div class="main-content col-md-9 bg-light border rounded-lg" style="padding: 1.5rem;">
                 <div class="jumbotron" id="current-day-forecast">
@@ -39,7 +45,8 @@
 
 
     </div>
-
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <script src="javascript/script.js"></script>
 </body>
 

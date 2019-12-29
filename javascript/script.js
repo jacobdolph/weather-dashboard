@@ -1,4 +1,5 @@
 function buildQueryUrl() {
+
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?";
 
     var queryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
@@ -6,8 +7,6 @@ function buildQueryUrl() {
         .val()
         .trim();
     queryParams.units = "imperial"
-    console.log("---------------\nURL: " + queryURL + "\n---------------");
-    console.log(queryURL + $.param(queryParams));
     return queryURL + $.param(queryParams);
 }
 function buildFiveDayQueryUrl() {
@@ -18,35 +17,64 @@ function buildFiveDayQueryUrl() {
     console.log(fiveDayQueryURL + $.param(fiveDayQueryParams));
     return fiveDayQueryURL + $.param(fiveDayQueryParams);
 }
+var citiesListEl = $("#city-list")
+var cities = []
+init();
+function renderCities() {
+    // citiesListEl.innerHTML = "";
+    for (var i = 0; i < cities.length; i++) {
+
+        var city = cities[i];
+        var li = $("<li>")
+        var button = $("<button>");
+        button.text(city);
+        button.attr("data-index", i);
+        li.append(button)
+        $("#city-list").append(li)
+    }
+}
+function init() {
+    $("#city-list").empty();
+    var storedCities = JSON.parse(localStorage.getItem("cities"));
+
+    // If todos were retrieved from localStorage, update the todos array to it
+    if (storedCities !== null) {
+        cities = storedCities;
+    }
+
+    // Render todos to the DOM
+    renderCities();
+}
+
 $(".search-button").on("click", function (event) {
     event.preventDefault();
-    console.log("hello")
+
+    var searchHistory = $("#search-term").val().trim();
+    console.log(searchHistory)
+    cities.push(searchHistory)
+    localStorage.setItem("cities", JSON.stringify(cities));
+
+
+    console.log("hello");
     $("#current-day-forecast").empty();
     $("#five-day-forecast").empty();
     var queryURL = buildQueryUrl();
     var fiveDayQueryURL;
+    // ---------------------Beginning of AJAX Call---------------------------
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (data) {
-        console.log(data.coord.lon);
-        console.log(data.coord.lat);
-        console.log(data.name);
-        console.log(data)
         function buildCurrentWeatherCard() {
             var date = moment().format("MMM Do YY");
             var weatherData = data;
             var currentWeatherIcon = data.weather[0].icon;
-            console.log(currentWeatherIcon)
             var currentWeatherIconEl = "http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png";
-            console.log(currentWeatherIconEl);
             var weathericon = $("<img/>", {
                 id: "weather-icon",
                 src: currentWeatherIconEl,
                 width: 75
-
             });
-            console.log(weathericon)
             var weatherCard = $("<div>").addClass("card weather-card current-day-weather rounded-lg").attr("style", "width: 18rem");
             var cityDateEl = $("<h5>").addClass("card-title").text(weatherData.name + " " + "(" + date + ")");
             var tempEl = $("<p>").addClass("card-text").text("Temperature: " + weatherData.main.temp + " F");
@@ -64,7 +92,6 @@ $(".search-button").on("click", function (event) {
             var fiveDayQueryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
             fiveDayQueryParams.id = data.id;
             fiveDayQueryParams.units = "imperial";
-            console.log(fiveDayQueryURL + $.param(fiveDayQueryParams));
             return fiveDayQueryURL + $.param(fiveDayQueryParams);
         }
         fiveDayQueryURL = buildFiveDayQueryUrl();
@@ -77,7 +104,6 @@ $(".search-button").on("click", function (event) {
 
             //    each day is going to get its own var
             var dayOne = fiveDayList[7]
-            console.log(dayOne)
             var dayOneIcon = dayOne.weather[0].icon;
             var dayOneWeatherIcon = "http://openweathermap.org/img/wn/" + dayOneIcon + ".png";
             dayOneIconEl = $("<img/>", {
@@ -167,8 +193,6 @@ $(".search-button").on("click", function (event) {
             $(dayFiveCard).append(dayFiveHum);
             $("#five-day-forecast").append(dayFiveCard);
             // ------------------------
-
-
         })
         var uvIndexEl;
         var uvQueryURL = "http://api.openweathermap.org/data/2.5/uvi?" + "lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0d2a570544db7d02e47387057bd868ca"
@@ -182,5 +206,8 @@ $(".search-button").on("click", function (event) {
             uvIndexTag = $("<p>").text("UV Index: " + uvIndexEl)
             $(".current-day-weather").append(uvIndexTag)
         })
+        $("#search-term").val(" ")
+        init();
     });
+    // ----------------END OF AJAX CALL-----------------------------
 })

@@ -195,7 +195,7 @@ $(".search-button").on("click", function (event) {
             // ------------------------
         })
         var uvIndexEl;
-        var uvQueryURL = "http://api.openweathermap.org/data/2.5/uvi?" + "lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0d2a570544db7d02e47387057bd868ca"
+        var uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?" + "lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0d2a570544db7d02e47387057bd868ca"
         buildCurrentWeatherCard();
         // uv index ajax call
         $.ajax({

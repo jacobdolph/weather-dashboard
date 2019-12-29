@@ -1,6 +1,6 @@
 function buildQueryUrl() {
 
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?";
 
     var queryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
     queryParams.q = $("#search-term")
@@ -10,7 +10,7 @@ function buildQueryUrl() {
     return queryURL + $.param(queryParams);
 }
 function buildFiveDayQueryUrl() {
-    var fiveDayQueryURL = "http://api.openweathermap.org/data/2.5/forecast?";
+    var fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var fiveDayQueryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
     fiveDayQueryParams.id = data.id;
     fiveDayQueryParams.units = "imperial";
@@ -69,7 +69,7 @@ $(".search-button").on("click", function (event) {
             var date = moment().format("MMM Do YY");
             var weatherData = data;
             var currentWeatherIcon = data.weather[0].icon;
-            var currentWeatherIconEl = "http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png";
+            var currentWeatherIconEl = "https://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png";
             var weathericon = $("<img/>", {
                 id: "weather-icon",
                 src: currentWeatherIconEl,
@@ -88,7 +88,7 @@ $(".search-button").on("click", function (event) {
             $("#current-day-forecast").append(weatherCard);
         }
         function buildFiveDayQueryUrl() {
-            var fiveDayQueryURL = "http://api.openweathermap.org/data/2.5/forecast?";
+            var fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?";
             var fiveDayQueryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
             fiveDayQueryParams.id = data.id;
             fiveDayQueryParams.units = "imperial";
@@ -105,7 +105,7 @@ $(".search-button").on("click", function (event) {
             //    each day is going to get its own var
             var dayOne = fiveDayList[7]
             var dayOneIcon = dayOne.weather[0].icon;
-            var dayOneWeatherIcon = "http://openweathermap.org/img/wn/" + dayOneIcon + ".png";
+            var dayOneWeatherIcon = "https://openweathermap.org/img/wn/" + dayOneIcon + ".png";
             dayOneIconEl = $("<img/>", {
                 id: "weather-icon",
                 src: dayOneWeatherIcon,
@@ -123,7 +123,7 @@ $(".search-button").on("click", function (event) {
             // ------------------------
             var dayTwo = fiveDayList[15]
             var dayTwoIcon = dayTwo.weather[0].icon;
-            var dayTwoWeatherIcon = "http://openweathermap.org/img/wn/" + dayTwoIcon + ".png";
+            var dayTwoWeatherIcon = "https://openweathermap.org/img/wn/" + dayTwoIcon + ".png";
             dayTwoIconEl = $("<img/>", {
                 id: "weather-icon",
                 src: dayTwoWeatherIcon,
@@ -141,7 +141,7 @@ $(".search-button").on("click", function (event) {
             // ------------------------
             var dayThree = fiveDayList[23]
             var dayThreeIcon = dayThree.weather[0].icon;
-            var dayThreeWeatherIcon = "http://openweathermap.org/img/wn/" + dayThreeIcon + ".png";
+            var dayThreeWeatherIcon = "https://openweathermap.org/img/wn/" + dayThreeIcon + ".png";
             dayThreeIconEl = $("<img/>", {
                 id: "weather-icon",
                 src: dayThreeWeatherIcon,
@@ -159,7 +159,7 @@ $(".search-button").on("click", function (event) {
             // ------------------------
             var dayFour = fiveDayList[31]
             var dayFourIcon = dayFour.weather[0].icon;
-            var dayFourWeatherIcon = "http://openweathermap.org/img/wn/" + dayFourIcon + ".png";
+            var dayFourWeatherIcon = "https://openweathermap.org/img/wn/" + dayFourIcon + ".png";
             dayFourIconEl = $("<img/>", {
                 id: "weather-icon",
                 src: dayFourWeatherIcon,
@@ -177,7 +177,7 @@ $(".search-button").on("click", function (event) {
             // ------------------------
             var dayFive = fiveDayList[39]
             var dayFiveIcon = dayFive.weather[0].icon;
-            var dayFiveWeatherIcon = "http://openweathermap.org/img/wn/" + dayFiveIcon + ".png";
+            var dayFiveWeatherIcon = "https://openweathermap.org/img/wn/" + dayFiveIcon + ".png";
             dayFiveIconEl = $("<img/>", {
                 id: "weather-icon",
                 src: dayFiveWeatherIcon,

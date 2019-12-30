@@ -1,11 +1,15 @@
 function buildQueryUrl() {
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?";
-
+    var dataIndex = $()
     var queryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
+    if ($("#searchterm").val() === "") {
+        queryParams.q = $(this).data("index").val();
+    }
     queryParams.q = $("#search-term")
         .val()
         .trim();
+
     queryParams.units = "imperial"
     return queryURL + $.param(queryParams);
 }
@@ -29,8 +33,11 @@ function renderCities() {
         var button = $("<button>");
         button.text(city);
         button.attr("data-index", i);
-        li.append(button)
-        $("#city-list").append(li)
+        button.attr("style", "width: 100%")
+        button.addClass("btn btn-info search-button");
+        li.append(button);
+        $("#city-list").prepend(li);
+        $("#city-list").prepend("<br>");
     }
 }
 function init() {
@@ -50,6 +57,9 @@ $(".search-button").on("click", function (event) {
     event.preventDefault();
 
     var searchHistory = $("#search-term").val().trim();
+    if (searchHistory === "") {
+        return;
+    };
     console.log(searchHistory)
     cities.push(searchHistory)
     localStorage.setItem("cities", JSON.stringify(cities));
@@ -111,7 +121,7 @@ $(".search-button").on("click", function (event) {
                 src: dayOneWeatherIcon,
                 width: 50
             })
-            var dayOneCard = $("<div>").addClass("card weather-card col bg-info text-white mr-md-4").attr("style", "width: 18rem");
+            var dayOneCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-4 mb-3").attr("style", "width: 18rem");
             var dayOneDate = $("<h5>").addClass("card-title").text(moment().add(1, 'days').format('L'));
             var dayOneTemp = $("<p>").addClass("card-text").text("Temperature: " + dayOne.main.temp + "F");
             var dayOneHum = $("<p>").addClass("card-text").text("Humidity: " + dayOne.main.humidity);
@@ -129,7 +139,7 @@ $(".search-button").on("click", function (event) {
                 src: dayTwoWeatherIcon,
                 width: 50
             })
-            var dayTwoCard = $("<div>").addClass("card weather-card col bg-info text-white mr-md-4").attr("style", "width: 18rem");
+            var dayTwoCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-4 mb-3").attr("style", "width: 18rem");
             var dayTwoDate = $("<h5>").addClass("card-title").text(moment().add(2, 'days').format('L'));
             var dayTwoTemp = $("<p>").addClass("card-text").text("Temperature: " + dayTwo.main.temp + "F");
             var dayTwoHum = $("<p>").addClass("card-text").text("Humidity: " + dayTwo.main.humidity);
@@ -147,7 +157,7 @@ $(".search-button").on("click", function (event) {
                 src: dayThreeWeatherIcon,
                 width: 50
             })
-            var dayThreeCard = $("<div>").addClass("card weather-card col bg-info text-white mr-md-4").attr("style", "width: 18rem");
+            var dayThreeCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-4 mb-3").attr("style", "width: 18rem");
             var dayThreeDate = $("<h5>").addClass("card-title").text(moment().add(3, 'days').format('L'));
             var dayThreeTemp = $("<p>").addClass("card-text").text("Temperature: " + dayThree.main.temp + "F");
             var dayThreeHum = $("<p>").addClass("card-text").text("Humidity: " + dayThree.main.humidity);
@@ -165,7 +175,7 @@ $(".search-button").on("click", function (event) {
                 src: dayFourWeatherIcon,
                 width: 50
             })
-            var dayFourCard = $("<div>").addClass("card weather-card col bg-info text-white mr-md-4").attr("style", "width: 18rem");
+            var dayFourCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-4 mb-3").attr("style", "width: 18rem");
             var dayFourDate = $("<h5>").addClass("card-title").text(moment().add(4, 'days').format('L'));
             var dayFourTemp = $("<p>").addClass("card-text").text("Temperature: " + dayFour.main.temp + "F");
             var dayFourHum = $("<p>").addClass("card-text").text("Humidity: " + dayFour.main.humidity);
@@ -183,7 +193,7 @@ $(".search-button").on("click", function (event) {
                 src: dayFiveWeatherIcon,
                 width: 50
             })
-            var dayFiveCard = $("<div>").addClass("card weather-card col bg-info text-white").attr("style", "width: 18rem");
+            var dayFiveCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mb-3").attr("style", "width: 18rem");
             var dayFiveDate = $("<h5>").addClass("card-title").text(moment().add(5, 'days').format('L'));
             var dayFiveTemp = $("<p>").addClass("card-text").text("Temperature: " + dayFive.main.temp + "F");
             var dayFiveHum = $("<p>").addClass("card-text").text("Humidity: " + dayFive.main.humidity);

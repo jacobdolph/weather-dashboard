@@ -1,28 +1,24 @@
-function buildQueryUrl() {
+var citiesListEl = $("#city-list")
+var cities = []
 
+
+function buildQueryUrl() {
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?";
-    var dataIndex = $()
     var queryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
-    if ($("#searchterm").val() === "") {
-        queryParams.q = $(this).data("index").val();
-    }
-    queryParams.q = $("#search-term")
-        .val()
-        .trim();
+    queryParams.q = $("#search-term").val().trim();
 
     queryParams.units = "imperial"
     return queryURL + $.param(queryParams);
+
 }
 function buildFiveDayQueryUrl() {
     var fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?";
     var fiveDayQueryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
     fiveDayQueryParams.id = data.id;
     fiveDayQueryParams.units = "imperial";
-    console.log(fiveDayQueryURL + $.param(fiveDayQueryParams));
+
     return fiveDayQueryURL + $.param(fiveDayQueryParams);
 }
-var citiesListEl = $("#city-list")
-var cities = []
 
 
 init();
@@ -39,7 +35,7 @@ function renderCities() {
         button.text(city);
         button.attr("data-index", i);
         button.attr("style", "width: 100%")
-        button.addClass("btn shadow-box btn-info search-button");
+        button.addClass("btn shadow-box btn-info hist-button");
         li.append(button);
         $("#city-list").prepend(li);
         $("#city-list").prepend("<br>");
@@ -65,7 +61,7 @@ $(".search-button").on("click", function (event) {
     if (searchHistory === "") {
         return;
     };
-    console.log(searchHistory)
+
     cities.push(searchHistory)
     localStorage.setItem("cities", JSON.stringify(cities));
 
@@ -73,7 +69,7 @@ $(".search-button").on("click", function (event) {
     console.log("hello");
     $("#current-day-forecast").empty();
     $("#five-day-forecast").empty();
-    var queryURL = buildQueryUrl();
+    queryURL = buildQueryUrl();
     var fiveDayQueryURL;
     // ---------------------Beginning of AJAX Call---------------------------
     $.ajax({
@@ -91,8 +87,8 @@ $(".search-button").on("click", function (event) {
                 width: 75
             });
             var currentTemp = Math.floor(weatherData.main.temp);
-            console.log(currentTemp)
-            var weatherCard = $("<div>").addClass("card weather-card current-day-weather").attr("style", "width: 18rem");
+
+            var weatherCard = $("<div>").addClass("card weather-card current-day-weather");
             var cityDateEl = $("<h5>").addClass("card-title").text(weatherData.name + " " + "(" + date + ")");
             var tempEl = $("<p>").addClass("card-text").text("Temp: " + currentTemp + " F");
             var humidityEl = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + weatherData.main.humidity + " %");
@@ -104,6 +100,8 @@ $(".search-button").on("click", function (event) {
             $(weatherCard).append(windspeedEl);
             $("#current-day-forecast").append(weatherCard);
         }
+
+
         function buildFiveDayQueryUrl() {
             var fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?";
             var fiveDayQueryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };
@@ -111,6 +109,8 @@ $(".search-button").on("click", function (event) {
             fiveDayQueryParams.units = "imperial";
             return fiveDayQueryURL + $.param(fiveDayQueryParams);
         }
+
+
         fiveDayQueryURL = buildFiveDayQueryUrl();
         // five day forecast ajax call
         $.ajax({
@@ -129,7 +129,7 @@ $(".search-button").on("click", function (event) {
                 width: 50
             })
             var dayOneTempEl = Math.floor(dayOne.main.temp);
-            var dayOneCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3").attr("style", "width: 18rem");
+            var dayOneCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3");
             var dayOneDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(moment().add(1, 'days').format('L'));
             var dayOneTemp = $("<p>").addClass("card-text").text("Temp: " + dayOneTempEl + " F");
             var dayOneHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + dayOne.main.humidity);
@@ -148,7 +148,7 @@ $(".search-button").on("click", function (event) {
                 width: 50
             })
             var dayTwoTempEl = Math.floor(dayTwo.main.temp);
-            var dayTwoCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3").attr("style", "width: 18rem");
+            var dayTwoCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3");
             var dayTwoDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(moment().add(2, 'days').format('L'));
             var dayTwoTemp = $("<p>").addClass("card-text").text("Temp: " + dayTwoTempEl + " F");
             var dayTwoHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + dayTwo.main.humidity);
@@ -167,7 +167,7 @@ $(".search-button").on("click", function (event) {
                 width: 50
             })
             var dayThreeTempEl = Math.floor(dayThree.main.temp)
-            var dayThreeCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3").attr("style", "width: 18rem");
+            var dayThreeCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3");
             var dayThreeDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(moment().add(3, 'days').format('L'));
             var dayThreeTemp = $("<p>").addClass("card-text").text("Temp: " + dayThreeTempEl + " F");
             var dayThreeHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + dayThree.main.humidity);
@@ -186,7 +186,7 @@ $(".search-button").on("click", function (event) {
                 width: 50
             })
             var dayFourTempEl = Math.floor(dayFour.main.temp);
-            var dayFourCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3").attr("style", "width: 18rem");
+            var dayFourCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3");
             var dayFourDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(moment().add(4, 'days').format('L'));
             var dayFourTemp = $("<p>").addClass("card-text").text("Temp: " + dayFourTempEl + " F");
             var dayFourHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + dayFour.main.humidity);
@@ -205,7 +205,7 @@ $(".search-button").on("click", function (event) {
                 width: 50
             })
             var dayFiveTempEl = Math.floor(dayFive.main.temp);
-            var dayFiveCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mb-3").attr("style", "width: 18rem");
+            var dayFiveCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3");
             var dayFiveDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(moment().add(5, 'days').format('L'));
             var dayFiveTemp = $("<p>").addClass("card-text").text("Temp: " + dayFiveTempEl + " F");
             var dayFiveHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + dayFive.main.humidity);

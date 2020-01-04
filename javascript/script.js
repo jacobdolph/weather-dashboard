@@ -1,3 +1,5 @@
+
+
 var citiesListEl = $("#city-list")
 var cities = []
 var cityName, fiveDayQueryURL, weatherData, currentWeatherIcon, currentWeatherIconEl, weathericon, currentTemp, weatherCard, cityDateEl, tempEl, humidityEl, windspeedEl, fiveDayQueryParams, fiveDayList;
@@ -152,7 +154,14 @@ function buildCurrentWeatherCardHist() {
     $("#current-day-forecast").append(weatherCard);
 };
 
-$(".hist-button").on("click", function () {
+// This is the line i changed
+// it used to be
+// $(.hist-button).click(function(){
+// ---code went here---
+// })
+// #city-list is the parent id --- button is the child element that
+// the click function will delegate to.
+$("#city-list").on("click", "button", function () {
     // event.preventDefault();
     $("#current-day-forecast").empty();
     $("#five-day-forecast").empty();

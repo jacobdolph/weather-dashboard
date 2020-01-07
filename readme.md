@@ -7,10 +7,10 @@ This application allows you to type in a city name and see the the current tempe
 ### Gallery
 ​
 Desktop:
-![Desktop View](/assets/images/weather-dashboard-desktop "Desktop view")
+![Desktop View](assets/images/weather-dashboard-desktop.png "Desktop view")
 ​
 Mobile:
-![Mobile View](./relativeLinkToImage.png "mobile view")
+![Mobile View](assets/images/weather-dashboard-mobile.png "mobile view")
 ​
 ​
 ​

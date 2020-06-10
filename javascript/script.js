@@ -22,7 +22,6 @@ function renderCities() {
     if (cities.length > 5) {
         cities.shift();
     }
-    // citiesListEl.innerHTML = "";
     for (var i = 0; i < cities.length; i++) {
         var city = cities[i];
         var li = $("<li>")
@@ -56,7 +55,6 @@ $(".search-button").on("click", function (event) {
     localStorage.setItem("cities", JSON.stringify(cities));
     queryURL = buildQueryUrl();
     var fiveDayQueryURL;
-    // ---------------------Beginning of AJAX Call---------------------------
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -93,7 +91,6 @@ $(".search-button").on("click", function (event) {
             return fiveDayQueryURL + $.param(fiveDayQueryParams);
         }
         fiveDayQueryURL = buildFiveDayQueryUrl();
-        // five day forecast ajax call
         $.ajax({
             url: fiveDayQueryURL,
             method: "GET"
@@ -123,7 +120,6 @@ $(".search-button").on("click", function (event) {
         var uvIndexEl;
         var uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?" + "lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0d2a570544db7d02e47387057bd868ca"
         buildCurrentWeatherCard();
-        // uv index ajax call
         $.ajax({
             url: uvQueryURL,
             method: "GET"
@@ -135,9 +131,7 @@ $(".search-button").on("click", function (event) {
         $("#search-term").val(null)
         init();
     });
-    // ----------------END OF AJAX CALL-----------------------------
 });
-
 function buildQueryUrlHist() {
     var queryURLHist = "https://api.openweathermap.org/data/2.5/weather?";
     var queryParamsHist = { "appid": "0d2a570544db7d02e47387057bd868ca" };
@@ -154,15 +148,7 @@ function buildCurrentWeatherCardHist() {
     $("#current-day-forecast").append(weatherCard);
 };
 
-// This is the line i changed
-// it used to be
-// $(.hist-button).click(function(){
-// ---code went here---
-// })
-// #city-list is the parent id --- button is the child element that
-// the click function will delegate to.
 $("#city-list").on("click", "button", function () {
-    // event.preventDefault();
     $("#current-day-forecast").empty();
     $("#five-day-forecast").empty();
     cityName = $(this).text();
@@ -171,9 +157,8 @@ $("#city-list").on("click", "button", function () {
         url: queryURLHist,
         method: "GET"
     }).then(function (data) {
-        // Current Day Card ------------------------------------------------
         weatherData = data;
-        // current weather card
+
         currentWeatherIcon = data.weather[0].icon;
         date = moment().format("MMM Do YY");
         currentWeatherIconEl = "https://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png";
@@ -199,8 +184,6 @@ $("#city-list").on("click", "button", function () {
             uvIndexTag = $("<p>").text("UV Index: " + uvIndexEl);
             $(".current-day-weather").append(uvIndexTag);
         })
-        // Current Day Card  ---------------------------------------------------------
-        // Five Day Forecast ---------------------------------------------------------
         function buildFiveDayQueryUrlHist() {
             var fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?";
             var fiveDayQueryParams = { "appid": "0d2a570544db7d02e47387057bd868ca" };

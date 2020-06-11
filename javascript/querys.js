@@ -24,13 +24,13 @@ function buildCurrentWeatherCard(data, weatherData, weatherCard, cityDateEl, tem
 }
 
 function buildFiveDayForecast(fiveData) {
-    console.log(fiveData)
+
     fiveDayList = fiveData.list;
     for (var i = 4; i < fiveDayList.length; i += 8) {
         let day = fiveDayList[i];
         let dateYear = day.dt_txt.slice(0, 4);
-        let dateMonth = day.dt_txt.slice(6, 7);
-        let dateDay = day.dt_txt.slice(9, 10)
+        let dateMonth = day.dt_txt.slice(5, 7);
+        let dateDay = day.dt_txt.slice(8, 10)
         let dayIcon = day.weather[0].icon;
         let dayWeatherIcon = "https://openweathermap.org/img/wn/" + dayIcon + ".png";
         let dayIconEl = $("<img/>", {
@@ -39,7 +39,7 @@ function buildFiveDayForecast(fiveData) {
             width: 50
         })
         let dayTempEl = Math.floor(day.main.temp);
-        let dayCard = $("<div>").addClass("card weather-card col-lg border border-white opacity-2 text-white mr-md-2 mb-3");
+        let dayCard = $("<div>").addClass("card weather-card col-lg border border-white opacity-4 text-black font-weight-bold mr-md-2 mb-3");
         let dayDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(`${dateMonth}/${dateDay}/${dateYear}`);
         let dayTemp = $("<p>").addClass("card-text").text("Temp: " + dayTempEl + " F");
         let dayHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + day.main.humidity);
@@ -62,7 +62,7 @@ function buildWeatherCardData(data) {
         width: 75
     });
     var currentTemp = Math.floor(weatherData.main.temp);
-    var weatherCard = $("<div>").addClass("card weather-card current-day-weather");
+    var weatherCard = $("<div>").addClass("card weather-card opacity-4 text-black font-weight-bold border border-white current-day-weather");
     var cityDateEl = $("<h5>").addClass("card-title").text(weatherData.name + " " + "(" + date + ")");
     var tempEl = $("<p>").addClass("card-text").text("Temp: " + currentTemp + " F");
     var humidityEl = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + weatherData.main.humidity + " %");

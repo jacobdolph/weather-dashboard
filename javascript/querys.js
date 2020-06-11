@@ -24,10 +24,13 @@ function buildCurrentWeatherCard(data, weatherData, weatherCard, cityDateEl, tem
 }
 
 function buildFiveDayForecast(fiveData) {
-
+    console.log(fiveData)
     fiveDayList = fiveData.list;
     for (var i = 4; i < fiveDayList.length; i += 8) {
         let day = fiveDayList[i];
+        let dateYear = day.dt_txt.slice(0, 4);
+        let dateMonth = day.dt_txt.slice(6, 7);
+        let dateDay = day.dt_txt.slice(9, 10)
         let dayIcon = day.weather[0].icon;
         let dayWeatherIcon = "https://openweathermap.org/img/wn/" + dayIcon + ".png";
         let dayIconEl = $("<img/>", {
@@ -36,8 +39,8 @@ function buildFiveDayForecast(fiveData) {
             width: 50
         })
         let dayTempEl = Math.floor(day.main.temp);
-        let dayCard = $("<div>").addClass("card weather-card col-lg bg-info text-white mr-md-2 mb-3");
-        let dayDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(moment().add(1, 'days').format('L'));
+        let dayCard = $("<div>").addClass("card weather-card col-lg border border-white opacity-2 text-white mr-md-2 mb-3");
+        let dayDate = $("<h5>").attr("style", "font-size:100%").addClass("card-title text-nowrap").text(`${dateMonth}/${dateDay}/${dateYear}`);
         let dayTemp = $("<p>").addClass("card-text").text("Temp: " + dayTempEl + " F");
         let dayHum = $("<p>").addClass("card-text text-nowrap").text("Humidity: " + day.main.humidity);
         $(dayCard).append(dayDate);
